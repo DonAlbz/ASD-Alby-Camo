@@ -17,6 +17,7 @@ public class ASD {
     public static void main(String[] args) {
         System.out.println("ciao stronzi!");
         // TODO code application logic here
+        System.out.println("Sono camo");
     }
     
 }
