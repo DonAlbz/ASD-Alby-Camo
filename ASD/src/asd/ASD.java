@@ -18,6 +18,7 @@ public class ASD {
         System.out.println("ciao stronzi!");
         // TODO code application logic here
         System.out.println("Sono camo");
+        System.out.println("Sono Alby!");
     }
     
 }
