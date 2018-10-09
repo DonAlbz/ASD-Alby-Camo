@@ -1,6 +1,6 @@
 package asd;
 
-public class ASD {
+public class Main {
 
 	
 	public static void main(String[] args)

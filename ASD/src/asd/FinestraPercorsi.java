@@ -21,6 +21,10 @@ public class FinestraPercorsi extends JFrame {
     public static final int LARGHEZZA_FINESTRA = 1200;
     public static final int ALTEZZA_FINESTRA = 800;
     
+    private Clicker clicker;
+    private Cella[] celle;
+    private boolean[] colora;
+    
     /*JButton pulsante1 = new JButton("Genera");
     JPanel pannello = new JPanel();
     JLabel ipLabel = new JLabel("IP host",SwingConstants.LEFT);
@@ -33,8 +37,7 @@ public class FinestraPercorsi extends JFrame {
     public FinestraPercorsi(int rows, int cols)
     {
         super(TITOLO_FINESTRA);
-        setSize(LARGHEZZA_FINESTRA, ALTEZZA_FINESTRA);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        inizializzaCelle(rows, cols);
         
         /*ipText.setEditable(true);
         fileDaInviareText.setEditable(true);
@@ -60,46 +63,10 @@ public class FinestraPercorsi extends JFrame {
         
         setContentPane(pannello);*/
         
-        setLayout( new GridLayout(rows, cols) );
-        celle = new Cella[rows * cols];
-        colora = new boolean[rows * cols];
-        clicker = new Clicker();
-
-        for(int i=0; i<rows*cols; i++) {
-            Cella c = new Cella();
-            c.addMouseListener( clicker );
-            add( c );
-        }
         
         setVisible(true);
     }
-        
-    public void impostaLimite(GridBagConstraints gbc, int gx, int gy, int gw, int gh, int wx, int wy)
-    {
-        gbc.gridx=gx;
-        gbc.gridy=gy;
-        gbc.gridheight=gh;
-        gbc.gridwidth=gw;
-        gbc.weightx=wx;
-        gbc.weighty=wy;
-    }
     
-    private class Cella extends JPanel {
-        private boolean colorata;
-        private Color bckColore;
-        
-        public Cella() {
-            setOpaque( true );
-            bckColore = getBackground();
-            
-            setBorder(BorderFactory.createLineBorder(Color.BLACK, 1) );
-            }
-        
-        public void switchColore() {
-            setBackground(colorata ? bckColore : Color.GREEN);
-            colorata = !colorata;
-        }
-    }
 
     private class Clicker extends MouseAdapter {
         
@@ -108,11 +75,15 @@ public class FinestraPercorsi extends JFrame {
         }
     }
 
-    private Clicker clicker;
-    private Cella[] celle;
-    private boolean[] colora;
-
-    /*public Griglia(int rows, int cols) {
+    private void coloraDecolora(Cella c) {
+        c.switchColore();
+    }
+    
+    private void inizializzaCelle(int rows, int cols)
+    {
+        setSize(LARGHEZZA_FINESTRA, ALTEZZA_FINESTRA);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        
         setLayout( new GridLayout(rows, cols) );
         celle = new Cella[rows * cols];
         colora = new boolean[rows * cols];
@@ -123,10 +94,6 @@ public class FinestraPercorsi extends JFrame {
             c.addMouseListener( clicker );
             add( c );
         }
-    }*/
-
-    private void coloraDecolora(Cella c) {
-        c.switchColore();
     }
        
 }
