@@ -7,6 +7,7 @@ package asd;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.Random;
 import javax.swing.JButton;
 
 /**
@@ -16,8 +17,10 @@ import javax.swing.JButton;
 public class Controller {
 
     private Cella[][] celle;
-    private FinestraPercorsi finestraPercorsi;
-    private OnClickGenera clickGenera = new OnClickGenera();
+    private Cella origine;
+    private Cella destinazione;
+    private final FinestraPercorsi finestraPercorsi;
+    private final OnClickGenera clickGenera = new OnClickGenera();
     private int righe;
     private int colonne;
     private double percentualeOstacoli;
@@ -25,7 +28,6 @@ public class Controller {
     Controller() {
         finestraPercorsi = new FinestraPercorsi();
         finestraPercorsi.getPulsanteGenera().addMouseListener(clickGenera);
-
     }
 
     private void creaCelle(int righe, int colonne, double percentualeOstacoli) {
@@ -34,8 +36,23 @@ public class Controller {
         for (int i = 0; i < celle.length; i++) {
             for (int j = 0; j < celle[0].length; j++) {
                 celle[i][j] = new Cella(i, j);
+            }
+        }
+        generaOstacoli(percentualeOstacoli);
+    }
 
-                //TODO utilizzare percentuale ostacoli
+    private void generaOstacoli(double percentualeOstacoli) {
+        int totaleOstacoli = (int) Math.floor( celle.length * celle[0].length*percentualeOstacoli/100);
+        Random r = new Random();
+        int rX;
+        int rY;
+        int ostacoliInseriti=0;
+        while(ostacoliInseriti<totaleOstacoli){
+            rX=r.nextInt(celle.length);
+            rY=r.nextInt(celle[0].length);
+            if(!celle[rX][rY].isObstacle()){
+                celle[rX][rY].setObstacle(true);
+                ostacoliInseriti++;
             }
         }
     }
@@ -44,19 +61,25 @@ public class Controller {
 
         public void mouseClicked(MouseEvent me) {
             getInfo((JButton) me.getSource());
-            creaCelle(righe, colonne, percentualeOstacoli); 
+            creaCelle(righe, colonne, percentualeOstacoli);
+            getOrigine();
+            getDestinazione();
             finestraPercorsi.inizializzaCelle(celle);
-            
+
         }
 
         private void getInfo(JButton jButton) {
             righe = Integer.parseInt(finestraPercorsi.getRighe());
-            colonne=Integer.parseInt(finestraPercorsi.getColonne());
-            percentualeOstacoli=Double.parseDouble(finestraPercorsi.getPercentualeOstacoli());
-            //TODO acquisire gli altri parametri
+            colonne = Integer.parseInt(finestraPercorsi.getColonne());
+            percentualeOstacoli = Double.parseDouble(finestraPercorsi.getPercentualeOstacoli());
+        }
 
-            //creaCelle(2, 4, 10);
-            //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        private void getOrigine() {
+            origine=celle[finestraPercorsi.getCoordinateOrigine()[0]][finestraPercorsi.getCoordinateOrigine()[1]];            
+        }
+
+        private void getDestinazione() {
+            destinazione=celle[finestraPercorsi.getCoordinateDestinazione()[0]][finestraPercorsi.getCoordinateDestinazione()[1]];            
         }
 
     }
