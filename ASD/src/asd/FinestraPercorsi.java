@@ -1,6 +1,8 @@
 package asd;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Container;
 import java.awt.GridLayout;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -29,11 +31,21 @@ public class FinestraPercorsi extends JFrame {
     // la x dell'origine corrisponde a coordinateOrigine[0] 
     // la y dell'origine corrisponde a coordinateOrigine[1]
     
+    JPanel nordPanel = new JPanel();
+    JPanel centrePanel = new JPanel();
+    JPanel southPanel = new JPanel();
+    
     JButton genera = new JButton("Genera");
-    JPanel pannello = new JPanel();
+    //JPanel pannello = new JPanel();
     JTextField righe = new JTextField(10);
     JTextField colonne= new JTextField(10);;
-    JTextField percentualeOstacoli= new JTextField(10);;
+    JTextField percentualeOstacoli= new JTextField(10);
+    
+    JLabel titolo = new JLabel("Prova del testo");
+    JLabel inserisci_righe = new JLabel("Inserisci il numero delle righe");
+    JLabel inserisci_colonne = new JLabel("Inserisci il numero delle colonne");
+    JLabel inserisci_percentuale = new JLabel("Inserisci la percentuale di ostacoli");
+    
     /*
     JLabel ipLabel = new JLabel("IP host",SwingConstants.LEFT);
     JLabel passwordLabel = new JLabel("Password", SwingConstants.LEFT);
@@ -49,6 +61,61 @@ public class FinestraPercorsi extends JFrame {
         //inizializzaCelle(20, 20, 10);
         setSize(LARGHEZZA_FINESTRA, ALTEZZA_FINESTRA);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        
+        Container container = this.getContentPane();
+        int i=1;
+        int j=4;
+        container.setLayout(new GridLayout(i,j));
+        JPanel[][] panelHolder = new JPanel[i][j];
+        for(int m=0; m<i; m++)
+        {
+            for(int n=0; n<j; n++)
+            {
+                panelHolder[m][n] = new JPanel();
+                container.add(panelHolder[m][n]);
+            }
+        }
+        //JPanel pannelloInterazione = panelHolder[0][0];
+        panelHolder[0][0].setLayout(new GridLayout(8,1));
+        JPanel[][] componentHolder = new JPanel[8][1];
+        for(int m=0; m<8; m++)
+        {
+            for(int n=0; n<1; n++)
+            {
+                componentHolder[m][n] = new JPanel();
+                panelHolder[0][0].add(componentHolder[m][n]);
+            }
+        }
+        componentHolder[0][0].add(titolo);
+        componentHolder[1][0].add(inserisci_righe);
+        componentHolder[2][0].add(righe);
+        componentHolder[3][0].add(inserisci_colonne);
+        componentHolder[4][0].add(colonne);
+        componentHolder[5][0].add(inserisci_percentuale);
+        componentHolder[6][0].add(percentualeOstacoli);
+        componentHolder[7][0].add(genera);
+        
+        /*panelHolder[0][0].add(titolo);
+        panelHolder[0][0].add(righe);
+        panelHolder[0][0].add(colonne);
+        panelHolder[0][0].add(percentualeOstacoli);
+        panelHolder[0][0].add(genera);*/
+        
+        /*centrePanel.setLayout(new GridLayout(2,1));
+        centrePanel.add(righe);
+        centrePanel.add(colonne);
+        centrePanel.add(percentualeOstacoli);
+        nordPanel.add(prova);
+        southPanel.add(genera);
+        
+        container.add(nordPanel,BorderLayout.EAST);
+        container.add(centrePanel,BorderLayout.EAST);
+        container.add(southPanel,BorderLayout.EAST);*/
+        
+        //getContentPane().add(nordPanel,BorderLayout.NORTH);
+        //getContentPane().add(centrePanel,BorderLayout.CENTER);
+        //getContentPane().add(southPanel,BorderLayout.SOUTH);
+        //pack(); // setto la finestra alla minima dimensione necessaria
         
         
         /*ipText.setEditable(true);
@@ -71,12 +138,15 @@ public class FinestraPercorsi extends JFrame {
         pannello.add(ipText);
         
         pulsante1.setSize(300,80);*/
-        setContentPane(pannello);
+        
+        
+        
+        /*setContentPane(pannello);
         
         pannello.add(righe);
         pannello.add(colonne);
         pannello.add(percentualeOstacoli);
-        pannello.add(genera);
+        pannello.add(genera);*/
         
         setVisible(true);
         
