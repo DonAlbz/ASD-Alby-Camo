@@ -195,7 +195,7 @@ public class FinestraPercorsi extends JFrame {
 
         
 
-    }
+    
 
     private void coloraDecolora(Cella c) {
         if (c.getBackground() != Parametri.COLORE_DESTINAZIONE && c.getBackground() != Parametri.COLORE_ORIGINE) {
