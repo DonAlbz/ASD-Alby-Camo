@@ -8,35 +8,58 @@ public class Cella extends JPanel {
 
     private boolean colorata;
     private Color bckColore;
-    private boolean isObstacle = false;
+    private boolean obstacle = false;
     private int x;
     private int y;
 
+    /**
+     * Definisce una cella di colore bianco e con bordi neri
+     * @param _x
+     * @param _y
+     */
     public Cella(int _x, int _y) {
         x = _x;
         y = _y;
+        
         setOpaque(true);
         bckColore = getBackground();
-        setBackground(Color.WHITE);
+        setBackground(Parametri.COLORE_CELLA);
 
         setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
     }
 
     public void switchColore(Color colore) {
-        setBackground(colorata ? bckColore : colore);
+        setBackground(colorata ? Parametri.COLORE_CELLA : colore);
         colorata = !colorata;
     }
 
     public boolean isObstacle() {
-        return isObstacle;
+        return obstacle;
     }
 
-    public int getX() {
+    public void setObstacle(boolean _obstacle) {
+        this.obstacle = _obstacle;
+        
+        if (colorata=obstacle){
+            setBackground(Parametri.COLORE_OSTACOLO);         
+        }
+        else{
+            setBackground(Parametri.COLORE_CELLA);            
+        }        
+    }
+
+    
+    public int getX1() {
         return x;
     }
 
-    public int getY() {
+    
+    public int getY1() {
         return y;
     }
-
+    
+    public void setColore(Color colore){
+        setBackground(colore);
+            colorata= (colore != Parametri.COLORE_CELLA);
+    }
 }
