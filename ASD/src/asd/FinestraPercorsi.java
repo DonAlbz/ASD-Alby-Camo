@@ -60,7 +60,7 @@ public class FinestraPercorsi extends JFrame {
         // inizializzazione dei componenti come bottoni e text field
         inizializzaComponenti(pannelloSinistra);
         // inizializzazione delle celle
-        inizializzaCelle(pannelloDestra);
+        //inizializzaCelle(pannelloDestra);
         
         
         setVisible(true);
@@ -92,18 +92,19 @@ public class FinestraPercorsi extends JFrame {
         }
     }
 
-    public void inizializzaCelle(JPanel pannello) {
-        setSize(pannello.getWidth(), pannello.getHeight());
-        pannello.setLayout(new GridLayout(10, 10));
+    public void inizializzaCelle(Cella[][] _celle) {
+        celle = _celle;
+        setSize(pannelloDestra.getWidth(), pannelloDestra.getHeight());
+        pannelloDestra.setLayout(new GridLayout(10, 10));
 
         //colora = new boolean[celle.length * celle[0].length];
         clicker = new Clicker();
         
-         for (int i = 0; i < 10; i++) {
-            for (int j = 0; j < 10; j++) {
-                Cella c = new Cella(i,j);
+         for (int i = 0; i < celle.length; i++) {
+            for (int j = 0; j < celle[0].length; j++) {
+                Cella c = celle[i][j];
                 c.addMouseListener(clicker);//Ad ogni cella viene associato un mouse listener per scatenare un evento ad ogni click
-                pannello.add(c);
+                pannelloDestra.add(c);
             }
         }
 
@@ -184,9 +185,10 @@ public class FinestraPercorsi extends JFrame {
          */
         public void mouseClicked(MouseEvent me) {
             switch (azione) {
-                case GENERA:
+                /*case GENERA:
                     inizializzaCelle(pannelloDestra);
                     break;
+                    */
                 case COLORA:
                     coloraDecolora((Cella) me.getSource());
                     break;
@@ -200,19 +202,6 @@ public class FinestraPercorsi extends JFrame {
         }
     }
 
-    private class ButtonClicker extends MouseAdapter {
-
-        public void mouseClicked(MouseEvent me) {
-            if((JButton) me.getSource() == genera) {
-                azione = ActionOnClick.GENERA;
-            }
-            if ((JButton) me.getSource() == origineButton) {
-                azione = ActionOnClick.ORIGINE;
-            } else if ((JButton) me.getSource() == destinazioneButton) {
-                azione = ActionOnClick.DESTINAZIONE;
-            }
-        }
-    }
     
     private JPanel[] inizializzazioneLayout(){
         setLayout(new GridBagLayout());
@@ -241,18 +230,35 @@ public class FinestraPercorsi extends JFrame {
     
     private void inizializzaComponenti(JPanel pannello){
         pannello.setLayout(new GridLayout(11,1,30,20));
+        ButtonClicker buttonClicker=new ButtonClicker();
         pannello.add(inserisci_righe);
         pannello.add(righe);
         pannello.add(inserisci_colonne);
         pannello.add(colonne);
         pannello.add(inserisci_percentuale);
         pannello.add(percentualeOstacoli);
-        genera.addMouseListener(buttonClicker);
+        //genera.addMouseListener(buttonClicker);
         pannello.add(genera);
+        origineButton.addMouseListener(buttonClicker);
         pannello.add(origineButton);
+        
         pannello.add(origineField);
+        destinazioneButton.addMouseListener(buttonClicker);
         pannello.add(destinazioneButton);
         pannello.add(destinazioneField);
         
+    }
+    private class ButtonClicker extends MouseAdapter {
+
+        public void mouseClicked(MouseEvent me) {
+           /* if((JButton) me.getSource() == genera) {
+                azione = ActionOnClick.GENERA;
+            }*/
+            if ((JButton) me.getSource() == origineButton) {
+                azione = ActionOnClick.ORIGINE;
+            } else if ((JButton) me.getSource() == destinazioneButton) {
+                azione = ActionOnClick.DESTINAZIONE;
+            }
+        }
     }
 }
